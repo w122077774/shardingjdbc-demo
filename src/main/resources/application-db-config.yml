@@ -1,0 +1,120 @@
+
+initialSize: 5
+minIdle: 5
+maxIdle: 100
+maxActive: 20
+maxWait: 60000
+timeBetweenEvictionRunsMillis: 60000
+minEvictableIdleTimeMillis: 300000
+
+
+#打印sql日志
+sharding:
+  jdbc:
+    config:
+      sharding:
+        props:
+          sql:
+            show: true
+        defaultDataSourceName: ds4
+        tables:
+          t_order:
+            actual-data-nodes: ds$->{0..3}.t_order_000$->{0..1}
+            database-strategy:
+              inline:
+                sharding-column: user_id
+                algorithm-expression: ds$->{user_id % 4}
+            table-strategy:
+              inline:
+                sharding-column: order_id
+                algorithm-expression: t_order_000$->{order_id % 2}
+          t_new_order:
+            actualDataNodes: ds$->{0..3}.t_new_order_000$->{0..1}
+            database-strategy:
+              complex:
+                shardingColumns: user_id,order_id
+                algorithmClassName: shard.jdbc.shardingjdbc.strategy.SnoWalkerComplexShardingDB
+            tableStrategy:
+              complex:
+                shardingColumns: user_id,order_id
+                algorithmClassName: shard.jdbc.shardingjdbc.strategy.SnoWalkerComplexShardingTB
+          t_user:
+            actualDataNodes: ds$->{0..3}.t_user_000$->{0..3}
+            database-strategy:
+              complex:
+                shardingColumns: user_id
+                algorithmClassName: shard.jdbc.shardingjdbc.strategy.SnoWalkerComplexShardingDB
+            tableStrategy:
+              complex:
+                shardingColumns: user_id
+                algorithmClassName: shard.jdbc.shardingjdbc.strategy.SnoWalkerComplexShardingTB
+    datasource:
+      names: ds0,ds1,ds2,ds3,ds4
+      ds0:
+        type: com.alibaba.druid.pool.DruidDataSource
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://127.0.0.1:3306/share_db0?allowMultiQueries=true&useUnicode=true&characterEncoding=utf8
+        username: root
+        password: ENC(RAXUtrmhmVPe3WjCPUKO4Z7xIOjtSrWL)
+        initialSize: ${initialSize}
+        minIdle: ${minIdle}
+        maxActive: ${maxActive}
+        maxWait: ${maxWait}
+        validationQuery: SELECT 1 FROM DUAL
+        timeBetweenEvictionRunsMillis: ${timeBetweenEvictionRunsMillis}
+        minEvictableIdleTimeMillis: ${minEvictableIdleTimeMillis}
+      ds1:
+        type: com.alibaba.druid.pool.DruidDataSource
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://127.0.0.1:3306/share_db1?allowMultiQueries=true&useUnicode=true&characterEncoding=utf8
+        username: root
+        password: ENC(RAXUtrmhmVPe3WjCPUKO4Z7xIOjtSrWL)
+        initialSize: ${initialSize}
+        minIdle: ${minIdle}
+        maxActive: ${maxActive}
+        maxWait: ${maxWait}
+        validationQuery: SELECT 1 FROM DUAL
+        timeBetweenEvictionRunsMillis: ${timeBetweenEvictionRunsMillis}
+        minEvictableIdleTimeMillis: ${minEvictableIdleTimeMillis}
+      ds2:
+        type: com.alibaba.druid.pool.DruidDataSource
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://127.0.0.1:3306/share_db2?allowMultiQueries=true&useUnicode=true&characterEncoding=utf8
+        username: root
+        password: ENC(RAXUtrmhmVPe3WjCPUKO4Z7xIOjtSrWL)
+        initialSize: ${initialSize}
+        minIdle: ${minIdle}
+        maxActive: ${maxActive}
+        maxWait: ${maxWait}
+        validationQuery: SELECT 1 FROM DUAL
+        timeBetweenEvictionRunsMillis: ${timeBetweenEvictionRunsMillis}
+        minEvictableIdleTimeMillis: ${minEvictableIdleTimeMillis}
+      ds3:
+        type: com.alibaba.druid.pool.DruidDataSource
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://127.0.0.1:3306/share_db3?allowMultiQueries=true&useUnicode=true&characterEncoding=utf8
+        username: root
+        password: ENC(RAXUtrmhmVPe3WjCPUKO4Z7xIOjtSrWL)
+        initialSize: ${initialSize}
+        minIdle: ${minIdle}
+        maxActive: ${maxActive}
+        maxWait: ${maxWait}
+        validationQuery: SELECT 1 FROM DUAL
+        timeBetweenEvictionRunsMillis: ${timeBetweenEvictionRunsMillis}
+        minEvictableIdleTimeMillis: ${minEvictableIdleTimeMillis}
+      ds4:
+        type: com.alibaba.druid.pool.DruidDataSource
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://127.0.0.1:3306/share_db4?allowMultiQueries=true&useUnicode=true&characterEncoding=utf8
+        username: root
+        password: ENC(RAXUtrmhmVPe3WjCPUKO4Z7xIOjtSrWL)
+        initialSize: ${initialSize}
+        minIdle: ${minIdle}
+        maxActive: ${maxActive}
+        maxWait: ${maxWait}
+        validationQuery: SELECT 1 FROM DUAL
+        timeBetweenEvictionRunsMillis: ${timeBetweenEvictionRunsMillis}
+        minEvictableIdleTimeMillis: ${minEvictableIdleTimeMillis}
+jasypt:
+  encryptor:
+    password: wjj

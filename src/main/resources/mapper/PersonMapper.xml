@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="shard.jdbc.shardingjdbc.mapper.PersonMapper">
+
+    <!--订单入库-->
+    <insert id="addPerson"
+            parameterType="shard.jdbc.shardingjdbc.entity.PersonInfoEntity">
+	  insert into t_person(
+          user_id,
+          order_id,
+          wife
+	  )
+	  values
+	  (
+          #{userId},
+          #{orderId},
+          #{wife}
+	  )
+	</insert>
+
+    <select id="getPerson" parameterType="java.lang.Integer" resultType="java.util.HashMap">
+        select p.user_id,p.order_id,p.wife from t_person p left join t_new_order o on p.order_id = o.order_id where
+         p.pid=#{pid}
+    </select>
+</mapper>

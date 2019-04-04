@@ -1,0 +1,20 @@
+
+server:
+  port: 8091
+
+########################################################################
+#
+#     mybatis配置
+#
+#########################################################################
+mybatis:
+  config-location: classpath:mybatis-config.xml
+  mapper-locations: classpath:mapper/*.xml
+spring:
+  profiles:
+    include: db-config
+  redis:
+    host: 39.106.193.32
+    port: 6379
+    password: 921210
+    database: 2

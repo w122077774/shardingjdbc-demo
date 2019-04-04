@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+                "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="shard.jdbc.shardingjdbc.mapper.UserMapper">
+
+    <insert id="addUser" parameterType="shard.jdbc.shardingjdbc.entity.UserInfoEntity">
+        insert into t_user(user_id,user_name,user_out_id) values (#{userId},#{userName},#{userOutId})
+    </insert>
+
+    <select id="getOrderByUserId" resultType="java.util.HashMap">
+        select u.user_id,o.order_id from t_user u left join t_new_order o on u.user_id = o.user_id
+        where u.user_id=#{userId} limit 1
+    </select>
+
+    <select id="getOrder" resultType="shard.jdbc.shardingjdbc.entity.UserInfoEntity">
+        select id,user_id userId,user_name userName,user_out_id userOutId  from t_user
+        where user_out_id=#{userOutId} limit 1
+    </select>
+
+    <select id="getUserInfo" resultType="shard.jdbc.shardingjdbc.entity.UserInfoEntity">
+        select id,user_id userId,user_name userName,user_out_id userOutId from t_user
+        where user_id=#{userId} limit 1
+    </select>
+
+    <select id="getUserInfo2" resultType="shard.jdbc.shardingjdbc.entity.UserInfoEntity">
+        select id,user_id userId,user_name userName,user_out_id userOutId from t_user
+        where user_out_id=#{userOutId}   and user_id=#{userId} limit 1
+    </select>
+</mapper>
